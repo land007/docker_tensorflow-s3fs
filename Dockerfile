@@ -22,6 +22,7 @@ RUN echo $(date "+%Y-%m-%d_%H:%M:%S") >> /.image_times && \
 RUN echo 'echo ${AccessKeyId}:${SecretAccessKey} > /opt/s3fs_passwd' >> /start.sh && \
 	echo 'chmod 600 /opt/s3fs_passwd' >> /start.sh && \
 	echo 'nohup s3fs ${Region} /mnt/s3fs -o passwd_file=/opt/s3fs_passwd  -d -d -f -o f2 -o curldbg -o umask=0000 -o mp_umask=0000 -o allow_other > /dev/null 2>&1 &' >> /start.sh
+RUN chmod +x /start.sh
 
 CMD /start.sh && source /etc/bash.bashrc && jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root
 #-o default_acl=public-read
